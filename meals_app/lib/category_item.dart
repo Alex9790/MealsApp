@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import './category_meals_screen.dart';
 
 class CategoryItem extends StatelessWidget {
-  String title;
-  Color color;
+  final String id;
+  final String title;
+  final Color color;
 
-  CategoryItem(this.title, this.color);
+  CategoryItem(this.id, this.title, this.color);
 
   void selectCategory(BuildContext context) {
     //clase de Flutter cuya funcionalidad es el paso de pantallas
@@ -14,7 +15,7 @@ class CategoryItem extends StatelessWidget {
       MaterialPageRoute(
         builder: (_) {
           //recibe context de parametro, pero como no se usa se ignora con "_"
-          return CategoryMealsScreen();
+          return CategoryMealsScreen(id, title);
         },
       ),
     );
