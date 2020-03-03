@@ -11,13 +11,18 @@ class CategoryItem extends StatelessWidget {
 
   void selectCategory(BuildContext context) {
     //clase de Flutter cuya funcionalidad es el paso de pantallas
-    Navigator.of(context).push(
+    /*Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) {
           //recibe context de parametro, pero como no se usa se ignora con "_"
           return CategoryMealsScreen(id, title);
         },
       ),
+    );
+    */
+    Navigator.of(context).pushNamed(
+      "/categories-meals",
+      arguments: {"id": id, "title": title},
     );
   }
 
