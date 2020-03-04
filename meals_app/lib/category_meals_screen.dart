@@ -10,7 +10,8 @@ class CategoryMealsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final routeArgs = ModalRoute.of(context).settings.arguments as Map<String, String>;
+    final routeArgs =
+        ModalRoute.of(context).settings.arguments as Map<String, String>;
     final categoryId = routeArgs["id"];
     final categoryTitle = routeArgs["title"];
     return Scaffold(
@@ -20,8 +21,10 @@ class CategoryMealsScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.title,
         ),
       ),
-      body: Center(
-        child: Text("Recipes para las Categorias."),
+      body: ListView.builder(
+        itemBuilder: (ctx, index) {
+          
+        },
       ),
     );
   }
