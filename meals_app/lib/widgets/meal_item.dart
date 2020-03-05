@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../models/meal.dart';
+import '../screens/meal_detail_screen.dart';
 
 class MealItem extends StatelessWidget {
+  final String id;
   final String title;
   final String imageUrl;
   final int duration;
@@ -10,7 +12,8 @@ class MealItem extends StatelessWidget {
   final Affordability affordability;
 
   MealItem(
-      {@required this.title,
+      {@required this.id,
+      @required this.title,
       @required this.imageUrl,
       @required this.duration,
       @required this.complexity,
@@ -18,44 +21,49 @@ class MealItem extends StatelessWidget {
 
   //metodo GET para convertir los Enums en texto que sea significativo para un usuario
   String get complexityText {
-    switch (complexity){
-      case Complexity.Simple : 
+    switch (complexity) {
+      case Complexity.Simple:
         return "Simple";
         break;
-      case Complexity.Challenging :
+      case Complexity.Challenging:
         return "Challenging";
         break;
-      case Complexity.Hard : 
+      case Complexity.Hard:
         return "Hard";
         break;
       default:
-        return "Unknown";        
+        return "Unknown";
     }
   }
 
   String get affordabilityText {
-    switch (affordability){
-      case Affordability.Affordable : 
+    switch (affordability) {
+      case Affordability.Affordable:
         return "Affordable";
         break;
-      case Affordability.Pricey :
+      case Affordability.Pricey:
         return "Pricey";
         break;
-      case Affordability.Luxurious : 
+      case Affordability.Luxurious:
         return "Luxurious";
         break;
       default:
-        return "Unknown";        
+        return "Unknown";
     }
   }
 
-  void selectMeal() {}
+  void selectMeal(BuildContext context) {
+    Navigator.of(context).pushNamed(
+      MealDetailScreen.routeName,
+      arguments: id,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       //argumento que agrega la funcionalidad al seleccionar este widget - redirigir a pagina de detalles
-      onTap: selectMeal,
+      onTap: () => selectMeal(context),
       //argumento donde se asigna el Widget que se qiere mostrar
       child: Card(
         //argumento para seleccionar la forma del Widget Card
