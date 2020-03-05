@@ -16,6 +16,39 @@ class MealItem extends StatelessWidget {
       @required this.complexity,
       @required this.affordability});
 
+  //metodo GET para convertir los Enums en texto que sea significativo para un usuario
+  String get complexityText {
+    switch (complexity){
+      case Complexity.Simple : 
+        return "Simple";
+        break;
+      case Complexity.Challenging :
+        return "Challenging";
+        break;
+      case Complexity.Hard : 
+        return "Hard";
+        break;
+      default:
+        return "Unknown";        
+    }
+  }
+
+  String get affordabilityText {
+    switch (affordability){
+      case Affordability.Affordable : 
+        return "Affordable";
+        break;
+      case Affordability.Pricey :
+        return "Pricey";
+        break;
+      case Affordability.Luxurious : 
+        return "Luxurious";
+        break;
+      default:
+        return "Unknown";        
+    }
+  }
+
   void selectMeal() {}
 
   @override
@@ -54,9 +87,72 @@ class MealItem extends StatelessWidget {
                     //argumento que se usa para ajustar la imagen, BoxFit reajustara el tamaño y recortara la imagen a conveniencia
                     fit: BoxFit.cover,
                   ),
-                )
+                ),
+                Positioned(
+                  bottom: 20,
+                  left: 10,
+                  //se encapsula en Container para que no se pierda el titulo en los bordes
+                  child: Container(
+                    width: 300,
+                    //agregar un background un poco transparente
+                    color: Colors.black54,
+                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 26,
+                        color: Colors.white,
+                      ),
+                      //evita que en caso de que el texto sea muy largo, sobresalga del espacio definido
+                      softWrap: true,
+                      //en caso de q el texto sobrepase el borde, aplica un efecto de desvanecer
+                      overflow: TextOverflow.fade,
+                    ),
+                  ),
+                ),
               ],
             ),
+            //informacion debajo de la imagen de los recipes
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  //cada item del Row estara compuesto por icono y texto
+                  /**Duracion */
+                  Row(
+                    children: <Widget>[
+                      Icon(Icons.schedule),
+                      //separar un poo el Icono del Texto
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text("$duration min"),
+                    ],
+                  ),
+                  /**Complexity */
+                  Row(
+                    children: <Widget>[
+                      Icon(Icons.work),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(complexityText),
+                    ],
+                  ),
+                  /**Affordability */
+                  Row(
+                    children: <Widget>[
+                      Icon(Icons.attach_money),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(affordabilityText),
+                    ],
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
