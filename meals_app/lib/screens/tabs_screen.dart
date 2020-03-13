@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import './categories_screen.dart';
 import './favorites_screen.dart';
+import '../widgets/main_drawer.dart';
 
 class TabsScreen extends StatefulWidget {
   @override
@@ -11,21 +12,26 @@ class TabsScreen extends StatefulWidget {
 class _TabsScreenState extends State<TabsScreen> {
   //se cambia esta lista a Map para intercambiar el titulo segun la Tab seleccionada
   final List<Map<String, Object>> _pages = [
-    {"page" : CategoriesScreen(), "title" : "Categories",},
-    {"page" : FavoritesScreen(), "title" : "Favorites",},
+    {
+      "page": CategoriesScreen(),
+      "title": "Categories",
+    },
+    {
+      "page": FavoritesScreen(),
+      "title": "Favorites",
+    },
   ];
 
   //indice utilizado para obtener el Widget de la lista
   int _selectedPageIndex = 0;
 
   //el parametro index es proveido automaticamente por Flutter, al referenciar esta funcion en el argumento "onTap" del Widget BottomNavigationBar()
-  void _selectPage(int index){
+  void _selectPage(int index) {
     //para realizar esta actualizacion de Widget, es la razn por la que e necesita Stateful Widget
     setState(() {
       _selectedPageIndex = index;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +40,8 @@ class _TabsScreenState extends State<TabsScreen> {
         //el titulo varia segun el Tab seleccionado, acediendo al Map referenciado de la lista de Maps
         title: Text(_pages[_selectedPageIndex]["title"]),
       ),
+      //forma de agregar Drawer
+      drawer: MainDrawer(),
       //se toma el Widget seleccionado de la lista de Widgets dependiendo del indice que represente al Tab seleccionado
       body: _pages[_selectedPageIndex]["page"],
       //metodo para mostrar Tabs en el fondo de la pantalla
