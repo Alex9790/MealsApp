@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../screens/filters_screen.dart';
+
 class MainDrawer extends StatelessWidget {
-  Widget buildListTitle(String title, IconData icon) {
+  Widget buildListTitle(String title, IconData icon, Function tapHandler) {
     return ListTile(
       leading: Icon(
         icon,
@@ -16,9 +18,7 @@ class MainDrawer extends StatelessWidget {
         ),
       ),
       //argumento que permite hacer click en el ListTile
-      onTap: () {
-        //accion a tomar para ir a otra pagina
-      },
+      onTap: tapHandler,
     );
   }
 
@@ -46,8 +46,22 @@ class MainDrawer extends StatelessWidget {
           ),
           //a continuacion se configuraran los botones
           SizedBox(height: 20),
-          buildListTitle("Comidas", Icons.restaurant),
-          buildListTitle("Configuración", Icons.settings),
+          buildListTitle(
+            "Comidas",
+            Icons.restaurant,
+            //implementacion de accion a tomar al hacer click
+            () {
+              //ir a la pantalla principal
+              Navigator.of(context).pushNamed("/");
+            },
+          ),
+          buildListTitle(
+            "Configuración",
+            Icons.settings,
+            () {
+              Navigator.of(context).pushNamed(FiltersScreen.routeName);
+            },
+          ),
         ],
       ),
     );
