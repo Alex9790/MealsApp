@@ -46,7 +46,7 @@ class MealDetailScreen extends StatelessWidget {
         title: Text("${selectedMeal.title}"),
       ),
       body: SingleChildScrollView(
-              child: Column(
+        child: Column(
           children: <Widget>[
             Container(
               height: 300,
@@ -89,7 +89,9 @@ class MealDetailScreen extends StatelessWidget {
                         selectedMeal.steps[index],
                       ),
                     ),
-                    Divider(thickness: 2,),
+                    Divider(
+                      thickness: 2,
+                    ),
                   ],
                 ),
                 itemCount: selectedMeal.steps.length,
@@ -97,6 +99,14 @@ class MealDetailScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.delete),
+        onPressed: () {
+          //para descartar la pantalla actual, funcionando como un boton hacia atras
+          //se envia el mealId con la intencion de que sea recibido por el Event After del pushNamed() en 
+          Navigator.of(context).pop(mealId);
+        },      
       ),
     );
   }
