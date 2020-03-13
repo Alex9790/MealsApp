@@ -52,14 +52,14 @@ class MainDrawer extends StatelessWidget {
             //implementacion de accion a tomar al hacer click
             () {
               //ir a la pantalla principal
-              Navigator.of(context).pushNamed("/");
+              Navigator.of(context).pushReplacementNamed("/");
             },
           ),
           buildListTitle(
             "Configuración",
             Icons.settings,
             () {
-              Navigator.of(context).pushNamed(FiltersScreen.routeName);
+              Navigator.of(context).pushReplacementNamed(FiltersScreen.routeName);
             },
           ),
         ],
