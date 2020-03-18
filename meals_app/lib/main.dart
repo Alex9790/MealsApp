@@ -24,29 +24,57 @@ class _MyAppState extends State<MyApp> {
     "vegetarian": false,
   };
   List<Meal> _availableMeals = DUMMY_MEALS;
+  List<Meal> _favoriteMeals = [];
 
-  void _setFilters(Map<String, bool> filterData){
+  void _setFilters(Map<String, bool> filterData) {
     //se actualizan los valores del map, cuado esta funcion callback se ejecuta desde filters_screen
     setState(() {
       _filters = filterData;
 
       _availableMeals = DUMMY_MEALS.where((meal) {
         //si estoy filtrando por gluten, pero meal no es gluten, entonces descarto meal
-        if(_filters["gluten"] && !meal.isGlutenFree){
+        if (_filters["gluten"] && !meal.isGlutenFree) {
           return false;
         }
-        if(_filters["lactose"] && !meal.isLactoseFree){
+        if (_filters["lactose"] && !meal.isLactoseFree) {
           return false;
         }
-        if(_filters["vegan"] && !meal.isVegan){
+        if (_filters["vegan"] && !meal.isVegan) {
           return false;
         }
-        if(_filters["vegetarian"] && !meal.isVegetarian){
+        if (_filters["vegetarian"] && !meal.isVegetarian) {
           return false;
         }
         return true;
       }).toList();
     });
+  }
+
+  //metodo para agregar/eliminar una comida de favoritos
+  void _toggleFavorite(String mealId) {
+    //retorna el index del elemento que cumpla con la condicion
+    final existingIndex =
+        _favoriteMeals.indexWhere((meal) => meal.id == mealId);
+
+    if (existingIndex >= 0) {
+      //en caso de conseguir el elemento en la lista se elimina
+      setState(() {
+        _favoriteMeals.removeAt(existingIndex);
+      });
+    } else {
+      //en caso de no conseguir elemento significa que se quiere agregar a favoritos
+      //se usa DUMMY_MEALS porque _availableMeals se vera afectada por los filtros
+      //.firstWhere() para que devuelva solo un elemento (el primero) que cumpla la condicion
+      _favoriteMeals.add(
+        DUMMY_MEALS.firstWhere((meal) => meal.id == mealId),
+      );
+    }
+  }
+
+  //metodo para verificar si un Meal esta ya identificado como favorito o no
+  bool _isMealFavorite(String id){
+    //equivalente al metodo .has que tienen las listas en java, donde retorna true/false si se encuentra algun elemento que cumpla la condicion
+    return _favoriteMeals.any((meal) => meal.id == id);
   }
 
   @override
@@ -78,10 +106,12 @@ class _MyAppState extends State<MyApp> {
       initialRoute: "/",
       routes: {
         //ruta por defecto
-        "/": (ctx) => TabsScreen(),
+        "/": (ctx) => TabsScreen(_favoriteMeals),
         //se envian la lista ya filtrada
-        CategoryMealsScreen.routeName: (ctx) => CategoryMealsScreen(_availableMeals),
-        MealDetailScreen.routeName: (ctx) => MealDetailScreen(),
+        CategoryMealsScreen.routeName: (ctx) =>
+            CategoryMealsScreen(_availableMeals),
+        //se envia funcion callback, para agregar/eliminar la comida en la listade favoritos
+        MealDetailScreen.routeName: (ctx) => MealDetailScreen(_toggleFavorite, _isMealFavorite),
         //se envian los filtros actualmente aplicados y la funcion para actualizarlos
         FiltersScreen.routeName: (ctx) => FiltersScreen(_filters, _setFilters),
       },

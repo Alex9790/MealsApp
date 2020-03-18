@@ -3,24 +3,37 @@ import 'package:flutter/material.dart';
 import './categories_screen.dart';
 import './favorites_screen.dart';
 import '../widgets/main_drawer.dart';
+import '../models/meal.dart';
 
 class TabsScreen extends StatefulWidget {
+  //se reciben desde main la lista de comidas favoritas
+  List<Meal> favoriteMeals;
+
+  TabsScreen(this.favoriteMeals);
+
   @override
   _TabsScreenState createState() => _TabsScreenState();
 }
 
 class _TabsScreenState extends State<TabsScreen> {
   //se cambia esta lista a Map para intercambiar el titulo segun la Tab seleccionada
-  final List<Map<String, Object>> _pages = [
+  List<Map<String, Object>> _pages;
+
+  @override
+  void initState(){
+    super.initState();
+    //se define _peages dentro de este metodo, para poder usar la propiedad "widget"
+    _pages = [
     {
       "page": CategoriesScreen(),
       "title": "Categories",
     },
     {
-      "page": FavoritesScreen(),
+      "page": FavoritesScreen(widget.favoriteMeals),
       "title": "Favorites",
     },
   ];
+  }
 
   //indice utilizado para obtener el Widget de la lista
   int _selectedPageIndex = 0;

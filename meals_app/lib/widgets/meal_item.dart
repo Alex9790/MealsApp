@@ -11,7 +11,7 @@ class MealItem extends StatelessWidget {
   final Complexity complexity;
   final Affordability affordability;
   //funcion para eliminar temporalmente una comida
-  final Function removeItem;
+  
 
 
   MealItem(
@@ -20,8 +20,7 @@ class MealItem extends StatelessWidget {
       @required this.imageUrl,
       @required this.duration,
       @required this.complexity,
-      @required this.affordability,
-      @required this.removeItem});
+      @required this.affordability});
 
   //metodo GET para convertir los Enums en texto que sea significativo para un usuario
   String get complexityText {
@@ -62,7 +61,7 @@ class MealItem extends StatelessWidget {
       arguments: id,
     ).then((result){
       if(result != null){
-        removeItem(result);
+        //removeItem(result);
       }
     });
   }

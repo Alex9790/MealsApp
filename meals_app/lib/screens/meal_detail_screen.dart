@@ -6,6 +6,11 @@ class MealDetailScreen extends StatelessWidget {
   //Ruta a usar para llegar a eta pantalla
   static const routeName = "/meal-detail";
 
+  final Function toggleFavorite;
+  final Function isMealFavorite;
+
+  MealDetailScreen(this.toggleFavorite, this.isMealFavorite);
+
   //se crea este build Widget para evitar repetir codigo //Otra opcion es crear un Widget en otro archivo
   Widget buildSectionTitle(BuildContext context, String title) {
     return Container(
@@ -101,12 +106,10 @@ class MealDetailScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.delete),
-        onPressed: () {
-          //para descartar la pantalla actual, funcionando como un boton hacia atras
-          //se envia el mealId con la intencion de que sea recibido por el Event After del pushNamed() en 
-          Navigator.of(context).pop(mealId);
-        },      
+        child: Icon( 
+          isMealFavorite(mealId) ? Icons.star : Icons.star_border,
+        ),
+        onPressed: () => toggleFavorite(mealId),      
       ),
     );
   }
